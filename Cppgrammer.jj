@@ -2,9 +2,9 @@ options {
   JAVA_UNICODE_ESCAPE = true;
 }
 
-PARSER_BEGIN(Tutgrammer)
-  public class Tutgrammer {}
-PARSER_END(Tutgrammer)
+PARSER_BEGIN(Cppgrammer)
+  public class Cppgrammer {}
+PARSER_END(Cppgrammer)
 
 
 SKIP : /* WHITE SPACE */
@@ -31,10 +31,24 @@ TOKEN :
 | < RSQPAREN: "]" >
 | < LBRACE: "{" >
 | < RBRACE: "}" >
+| < AT: "@" >
+| < HASH: "#" >
+| < INCLUDE: "include" >
+| < DEFINE: "define" >
+| < IMPORT: "import" >
+| < EXPORT: "export" >
+| < MODULE: "module" >
+| < QUOTE: "'" >
 | < SEMICOLON: ";" >
+| < COLON: ":" >
+| < TILDE: "~" >
 | < DOT: "." >
+| < COMMA: "," >
 | < ASSIGN: "=" >
+| < LESS: "<" >
+| < GREATER: ">" >
 | < LE: "<=" >
+| < GE: ">=" >
 | < NE: "!=" >
 | < PLUS: "+" >
 | < FLOAT: "float" >
@@ -43,8 +57,11 @@ TOKEN :
 | < DIV: "/" >
 | < AND : "&&" >
 | < OR : "||" >
+| < PIPE: "|" >
+| < BIT_AND: "&" >
 | < NOT : "!" >
 | < BOOLEAN: "boolean" >
+| < PACKAGE: "package" >
 | < CLASS: "class" >
 | < INTERFACE: "interface" >
 | < ELSE: "else" >
@@ -63,13 +80,14 @@ TOKEN :
 | < TRUE: "true" >
 | < PRINT: "System.out.println" >
 | < VOID: "void" >
-| < DEFINE: "#define" >
+| < OBJECT: "Object" >
 }
 
 TOKEN : /* LITERALS */
 {
   < INTEGER_LITERAL: ( ["1"-"9"] (["0"-"9"])* | "0" ) >
 | < FLOAT_LITERAL: <INTEGER_LITERAL> <DOT> ( (["0"-"9"])* ["1"-"9"] ) >
+| <STRING_LITERAL: "\"" (~["\"", "\\"] | "\\\"" | "\\\\" | "\\n" | "\\t" | "\\f" | "\\r" | "\\" ~[] )* "\"" >
 }
 
 TOKEN : /* IDENTIFIERS */
@@ -116,316 +134,145 @@ TOKEN : /* IDENTIFIERS */
 }
 
 /*************************************
- * The Tchk Grammar Starts Here *
+ * The Cppgrammer Grammar Starts Here *
  *************************************/
 
 void Goal() :
 {}
 {
-
-  MainClass()
-  ( TypeDeclaration() )*
-  <EOF>
+   ( Statement() )*
+   <EOF>
 }
 
-void MainClass() :
-{}
-{
-  "class" Identifier() "{"
-    "public" "static" "void" "main" "(" "String" "[" "]" Identifier() ")"
-    "{" PrintStatement() "}"
-  "}"
-}
-
-void TypeDeclaration() :
-{}
-{
-  LOOKAHEAD(3)
-  ClassDeclaration()
-|
-  ClassExtendsDeclaration()
-}
-
-void ClassDeclaration() :
-{}
-{
-  "class" Identifier() "{" 
-                           ( MethodDeclaration() )*
-                       "}"
-}
-
-void ClassExtendsDeclaration() :
-{}
-{
-  "class" Identifier() "extends" Identifier()
-                       "{" 
-                           ( MethodDeclaration() )*
-                       "}"
-}
-
-void VarDeclaration() :
-{}
-{
-  Type() Identifier() ";"
-}
-
-void MethodDeclaration() :
-{}
-{
-  "public" Type() Identifier()
-  "(" ( FormalParameterList() )? ")"
-  "{" ( LOOKAHEAD(2) VarDeclaration() )*
-      ( Statement() )* "return" Expression() ";" "}"
-}
-
-void FormalParameterList() :
-{}
-{
-  FormalParameter() ( FormalParameterRest() )*
-}
-
-void FormalParameter() :
-{}
-{
-  Type() Identifier()
-}
-
-void FormalParameterRest() :
-{}
-{
-  "," FormalParameter()
-}
-
-void Type() :
-{}
-{
-  BooleanType()
-|
-  IntegerType()
-|
-  FloatType()
-|
-  Identifier()
-}
-
-void BooleanType() :
-{}
-{
-  "boolean"
-}
-
-void IntegerType() :
-{}
-{
-  "int"
-}
-void FloatType() :
-{}
-{
-  "float"
-}
 void Statement() :
 {}
 {
-  Block()
+  LOOKAHEAD("export module") ModuleDeclaration()
 |
-  LOOKAHEAD(2)
-  AssignmentStatement()
+  LOOKAHEAD("import") ImportStatement()
 |
-  IfStatement()
+  LOOKAHEAD("export import") ExportImportStatement()
 |
-  WhileStatement()
+  LOOKAHEAD("module") ModuleStatement()
 |
-  PrintStatement()
-}
-
-void Block() :
-{}
-{
-  "{" ( Statement() )* "}"
-}
-
-void AssignmentStatement() :
-{}
-{
-  Identifier() "=" Expression() ";"
-}
-
-void IfStatement() :
-{}
-{
-  // Add if-then stmt as well
-  LOOKAHEAD(IfthenElseStatement()) IfthenElseStatement()
-  | IfthenStatement()
-}
-void IfthenStatement() :
-{}
-{
-  "if" "(" Expression() ")" Statement()
-}
-void IfthenElseStatement() :
-{}
-{
-  "if" "(" Expression() ")" Statement() "else" Statement()
-}
-void WhileStatement() :
-{}
-{
-  "while" "(" Expression() ")" Statement()
-}
-
-void PrintStatement() :
-{}
-{
-  "System.out.println" "(" Expression() ")" ";"
-}
-
-void Expression() :
-{}
-{
-  LOOKAHEAD( PrimaryExpression() "||" )
-  OrExpression()
+  LOOKAHEAD("#" "include") IncludeStatement()
 |
-  LOOKAHEAD( PrimaryExpression() "&&" )
-  AndExpression()
-|
-  LOOKAHEAD( PrimaryExpression() "<=" )
-  CompareExpression()
-|
-  LOOKAHEAD( PrimaryExpression() "!=" )
-  neqExpression()
-|
-  LOOKAHEAD( PrimaryExpression() "+" )
-  PlusExpression()
-|
-  LOOKAHEAD( PrimaryExpression() "-" )
-  MinusExpression()
-|
-  LOOKAHEAD( PrimaryExpression() "*" )
-  TimesExpression()
-|
-  LOOKAHEAD( PrimaryExpression() "/" )
-  DivExpression()
-|
-  LOOKAHEAD( PrimaryExpression() "." Identifier() "(" )
-  MessageSend()
-|
-  PrimaryExpression()
+  OtherStatement()
 }
 
-void AndExpression() :
+void ModuleDeclaration() :
 {}
 {
-  PrimaryExpression() "&&" PrimaryExpression()
+  "export" "module" DotIdentifier() ";"
 }
 
-void OrExpression() :
+void ImportStatement() :
 {}
 {
-  PrimaryExpression() "||" PrimaryExpression()
+  "import" DotIdentifier() ";"
 }
 
-
-void CompareExpression() :
+void ExportImportStatement() :
 {}
 {
-  PrimaryExpression() "<=" PrimaryExpression()
+  "export" "import" DotIdentifier() ";"
 }
 
-void neqExpression() :
+void ModuleStatement() :
 {}
 {
-  PrimaryExpression() "!=" PrimaryExpression()
+  "module" DotIdentifier() ";"
+}
+
+void IncludeStatement() :
+{}
+{
+  "#" "include" (<STRING_LITERAL> | Include() )
+}
+
+void Include() :
+{}
+{
+  "<" DotIdentifier() ">" 
 }
 
 
-void PlusExpression() :
+void DotIdentifier() :
 {}
 {
-  PrimaryExpression() "+" PrimaryExpression()
+  <IDENTIFIER> (LOOKAHEAD(RemainingIdentifier()) RemainingIdentifier() )*
 }
 
-void MinusExpression() :
+void RemainingIdentifier() :
 {}
 {
-  PrimaryExpression() "-" PrimaryExpression()
+  "." ( Identifier() | Asterisk() )
 }
 
-void TimesExpression() :
+void Asterisk() :
 {}
 {
-  PrimaryExpression() "*" PrimaryExpression()
-}
-
-void DivExpression() :
-{}
-{
-  PrimaryExpression() "/" PrimaryExpression()
-}
-
-void MessageSend() :
-{}
-{
-  PrimaryExpression() "." Identifier()
-  "(" ( ExpressionList() )? ")"
-}
-void ExpressionList() :
-{}
-{
-  Expression() ( ExpressionRest() )*
-}
-
-void ExpressionRest() :
-{}
-{
-  "," Expression()
-}
-
-void PrimaryExpression() :
-{}
-{
-  IntegerLiteral()
-|
-  FloatLiteral()
-|
-  TrueLiteral()
-|
-  FalseLiteral()
-|
-  Identifier()
-|
-  ThisExpression()
-|
-  AllocationExpression()
-|
-  NotExpression()
-|
-  BracketExpression()
-}
-
-void IntegerLiteral() :
-{}
-{
-  <INTEGER_LITERAL>
-}
-
-void FloatLiteral() :
-{}
-{
-  <FLOAT_LITERAL>
+  <MULT>
 }
 
 
-void TrueLiteral() :
+void OtherStatement() :
 {}
 {
-  "true"
-}
-
-void FalseLiteral() :
-{}
-{
-  "false"
+  <LPAREN>
+  | <RPAREN>
+  | <LSQPAREN>
+  | <RSQPAREN>
+  | <LBRACE>
+  | <RBRACE>
+  | <AT>
+  | <HASH>
+  | <DEFINE>
+  | <QUOTE>
+  | <SEMICOLON>
+  | <COLON>
+  | <DOT>
+  | <COMMA>
+  | <ASSIGN>
+  | <GREATER>
+  | <GE>
+  | <LESS>
+  | <LE>
+  | <NE>
+  | <PLUS>
+  | <FLOAT>
+  | <MINUS>
+  | <MULT>
+  | <DIV>
+  | <AND>
+  | <OR>
+  | <PIPE>
+  | <BIT_AND>
+  | <NOT>
+  | <BOOLEAN>
+  | <CLASS>
+  | <INTERFACE>
+  | <ELSE>
+  | <EXTENDS>
+  | <FALSE>
+  | <IF>
+  | <WHILE>
+  | <INTEGER>
+  | <MAIN>
+  | <NEW>
+  | <PUBLIC>
+  | <RETURN>
+  | <STATIC>
+  | <STRING>
+  | <THIS>
+  | <TRUE>
+  | <PRINT>
+  | <VOID>
+  | <OBJECT>
+  | <INTEGER_LITERAL>
+  | <FLOAT_LITERAL>
+  | <STRING_LITERAL>
+  | <IDENTIFIER>
 }
 
 void Identifier() :
@@ -434,39 +281,4 @@ void Identifier() :
   <IDENTIFIER>
 }
 
-void ThisExpression() :
-{}
-{
-  "this"
-}
-
-void AllocationExpression() :
-{}
-{
-  "new" Identifier() "(" ")"
-}
-
-void NotExpression() :
-{}
-{
-  "!" Expression()
-}
-
-void BracketExpression() :
-{}
-{
-  "(" Expression() ")"
-}
-
-void IdentifierList() :
-{}
-{
-  Identifier() ( IdentifierRest() )*
-}
-
-void IdentifierRest() :
-{}
-{
-  "," Identifier()
-}
 
