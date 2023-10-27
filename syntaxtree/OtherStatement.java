@@ -18,6 +18,7 @@ package syntaxtree;
  *       | <QUOTE>
  *       | <SEMICOLON>
  *       | <COLON>
+ *       | <TILDE>
  *       | <DOT>
  *       | <COMMA>
  *       | <ASSIGN>

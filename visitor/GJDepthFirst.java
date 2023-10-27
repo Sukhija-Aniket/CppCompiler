@@ -212,6 +212,7 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
     *       | <QUOTE>
     *       | <SEMICOLON>
     *       | <COLON>
+    *       | <TILDE>
     *       | <DOT>
     *       | <COMMA>
     *       | <ASSIGN>

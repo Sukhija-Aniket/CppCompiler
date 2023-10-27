@@ -116,6 +116,7 @@ public interface Visitor {
     *       | <QUOTE>
     *       | <SEMICOLON>
     *       | <COLON>
+    *       | <TILDE>
     *       | <DOT>
     *       | <COMMA>
     *       | <ASSIGN>

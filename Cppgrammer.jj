@@ -231,6 +231,7 @@ void OtherStatement() :
   | <QUOTE>
   | <SEMICOLON>
   | <COLON>
+  | <TILDE>
   | <DOT>
   | <COMMA>
   | <ASSIGN>

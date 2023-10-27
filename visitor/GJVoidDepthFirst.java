@@ -180,6 +180,7 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
     *       | <QUOTE>
     *       | <SEMICOLON>
     *       | <COLON>
+    *       | <TILDE>
     *       | <DOT>
     *       | <COMMA>
     *       | <ASSIGN>

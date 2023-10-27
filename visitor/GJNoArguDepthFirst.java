@@ -101,11 +101,9 @@ public class GJNoArguDepthFirst implements GJNoArguVisitor<String> {
     * f2 -> ";"
     */
    public String visit(ImportStatement n) {
-      String _ret=null;
-      n.f0.accept(this);
-      n.f1.accept(this);
-      n.f2.accept(this);
-      return _ret;
+      String str = n.f1.accept(this);
+      System.out.println(str);
+      return null;
    }
 
    /**
@@ -142,11 +140,16 @@ public class GJNoArguDepthFirst implements GJNoArguVisitor<String> {
     * f2 -> ( <STRING_LITERAL> | Include() )
     */
    public String visit(IncludeStatement n) {
-      String _ret=null;
-      n.f0.accept(this);
-      n.f1.accept(this);
-      n.f2.accept(this);
-      return _ret;
+      String str="";
+      Node node = n.f2.choice;
+      if (node instanceof Include) {
+         str += n.f2.accept(this);
+      } else {
+         NodeToken nodeToken = (NodeToken) n.f2.choice;
+         str += nodeToken.tokenImage.substring(1,nodeToken.tokenImage.length()-1);
+      }
+      System.out.println(str);
+      return null;
    }
 
    /**
@@ -155,11 +158,9 @@ public class GJNoArguDepthFirst implements GJNoArguVisitor<String> {
     * f2 -> ">"
     */
    public String visit(Include n) {
-      String _ret=null;
-      n.f0.accept(this);
-      n.f1.accept(this);
-      n.f2.accept(this);
-      return _ret;
+      String str = n.f1.accept(this);
+      // System.out.println(str);
+      return str;
    }
 
    /**
@@ -167,10 +168,15 @@ public class GJNoArguDepthFirst implements GJNoArguVisitor<String> {
     * f1 -> ( RemainingIdentifier() )*
     */
    public String visit(DotIdentifier n) {
-      String _ret=null;
-      n.f0.accept(this);
-      n.f1.accept(this);
-      return _ret;
+      String str="";
+      str += n.f0.tokenImage;
+      NodeListOptional nodeListOptional = (NodeListOptional) n.f1;
+      for(Node x: nodeListOptional.nodes) {
+         RemainingIdentifier remainingIdentifier = (RemainingIdentifier) x;
+         String temp = remainingIdentifier.accept(this);
+         str += temp;
+      }  
+      return str;
    }
 
    /**
@@ -178,19 +184,18 @@ public class GJNoArguDepthFirst implements GJNoArguVisitor<String> {
     * f1 -> ( Identifier() | Asterisk() )
     */
    public String visit(RemainingIdentifier n) {
-      String _ret=null;
-      n.f0.accept(this);
-      n.f1.accept(this);
-      return _ret;
+      Node node = n.f1.choice;
+      if (node instanceof Identifier) {
+         return n.f0.tokenImage + n.f1.accept(this);
+      }   
+      return "";
    }
 
    /**
     * f0 -> <MULT>
     */
    public String visit(Asterisk n) {
-      String _ret=null;
-      n.f0.accept(this);
-      return _ret;
+     return n.f0.tokenImage;
    }
 
    /**
@@ -259,9 +264,7 @@ public class GJNoArguDepthFirst implements GJNoArguVisitor<String> {
     * f0 -> <IDENTIFIER>
     */
    public String visit(Identifier n) {
-      String _ret=null;
-      n.f0.accept(this);
-      return _ret;
+      return n.f0.tokenImage;
    }
 
 }

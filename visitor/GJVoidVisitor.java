@@ -116,6 +116,7 @@ public interface GJVoidVisitor<A> {
     *       | <QUOTE>
     *       | <SEMICOLON>
     *       | <COLON>
+    *       | <TILDE>
     *       | <DOT>
     *       | <COMMA>
     *       | <ASSIGN>

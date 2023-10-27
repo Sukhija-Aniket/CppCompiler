@@ -116,6 +116,7 @@ public interface GJNoArguVisitor<R> {
     *       | <QUOTE>
     *       | <SEMICOLON>
     *       | <COLON>
+    *       | <TILDE>
     *       | <DOT>
     *       | <COMMA>
     *       | <ASSIGN>

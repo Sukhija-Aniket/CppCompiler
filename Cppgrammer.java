@@ -28,6 +28,7 @@ public class Cppgrammer implements CppgrammerConstants {
       case QUOTE:
       case SEMICOLON:
       case COLON:
+      case TILDE:
       case DOT:
       case COMMA:
       case ASSIGN:
@@ -124,6 +125,7 @@ public class Cppgrammer implements CppgrammerConstants {
       case QUOTE:
       case SEMICOLON:
       case COLON:
+      case TILDE:
       case DOT:
       case COMMA:
       case ASSIGN:
@@ -461,6 +463,8 @@ public class Cppgrammer implements CppgrammerConstants {
    Token n106;
    NodeToken n107;
    Token n108;
+   NodeToken n109;
+   Token n110;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LPAREN:
       n2 = jj_consume_token(LPAREN);
@@ -522,215 +526,220 @@ public class Cppgrammer implements CppgrammerConstants {
                     n23 = JTBToolkit.makeNodeToken(n24);
         n0 = new NodeChoice(n23, 11);
       break;
-    case DOT:
-      n26 = jj_consume_token(DOT);
-                  n25 = JTBToolkit.makeNodeToken(n26);
+    case TILDE:
+      n26 = jj_consume_token(TILDE);
+                    n25 = JTBToolkit.makeNodeToken(n26);
         n0 = new NodeChoice(n25, 12);
       break;
-    case COMMA:
-      n28 = jj_consume_token(COMMA);
-                    n27 = JTBToolkit.makeNodeToken(n28);
+    case DOT:
+      n28 = jj_consume_token(DOT);
+                  n27 = JTBToolkit.makeNodeToken(n28);
         n0 = new NodeChoice(n27, 13);
       break;
-    case ASSIGN:
-      n30 = jj_consume_token(ASSIGN);
-                     n29 = JTBToolkit.makeNodeToken(n30);
+    case COMMA:
+      n30 = jj_consume_token(COMMA);
+                    n29 = JTBToolkit.makeNodeToken(n30);
         n0 = new NodeChoice(n29, 14);
       break;
-    case GREATER:
-      n32 = jj_consume_token(GREATER);
-                      n31 = JTBToolkit.makeNodeToken(n32);
+    case ASSIGN:
+      n32 = jj_consume_token(ASSIGN);
+                     n31 = JTBToolkit.makeNodeToken(n32);
         n0 = new NodeChoice(n31, 15);
       break;
-    case GE:
-      n34 = jj_consume_token(GE);
-                 n33 = JTBToolkit.makeNodeToken(n34);
+    case GREATER:
+      n34 = jj_consume_token(GREATER);
+                      n33 = JTBToolkit.makeNodeToken(n34);
         n0 = new NodeChoice(n33, 16);
       break;
-    case LESS:
-      n36 = jj_consume_token(LESS);
-                   n35 = JTBToolkit.makeNodeToken(n36);
+    case GE:
+      n36 = jj_consume_token(GE);
+                 n35 = JTBToolkit.makeNodeToken(n36);
         n0 = new NodeChoice(n35, 17);
       break;
-    case LE:
-      n38 = jj_consume_token(LE);
-                 n37 = JTBToolkit.makeNodeToken(n38);
+    case LESS:
+      n38 = jj_consume_token(LESS);
+                   n37 = JTBToolkit.makeNodeToken(n38);
         n0 = new NodeChoice(n37, 18);
       break;
-    case NE:
-      n40 = jj_consume_token(NE);
+    case LE:
+      n40 = jj_consume_token(LE);
                  n39 = JTBToolkit.makeNodeToken(n40);
         n0 = new NodeChoice(n39, 19);
       break;
-    case PLUS:
-      n42 = jj_consume_token(PLUS);
-                   n41 = JTBToolkit.makeNodeToken(n42);
+    case NE:
+      n42 = jj_consume_token(NE);
+                 n41 = JTBToolkit.makeNodeToken(n42);
         n0 = new NodeChoice(n41, 20);
       break;
-    case FLOAT:
-      n44 = jj_consume_token(FLOAT);
-                    n43 = JTBToolkit.makeNodeToken(n44);
+    case PLUS:
+      n44 = jj_consume_token(PLUS);
+                   n43 = JTBToolkit.makeNodeToken(n44);
         n0 = new NodeChoice(n43, 21);
       break;
-    case MINUS:
-      n46 = jj_consume_token(MINUS);
+    case FLOAT:
+      n46 = jj_consume_token(FLOAT);
                     n45 = JTBToolkit.makeNodeToken(n46);
         n0 = new NodeChoice(n45, 22);
       break;
-    case MULT:
-      n48 = jj_consume_token(MULT);
-                   n47 = JTBToolkit.makeNodeToken(n48);
+    case MINUS:
+      n48 = jj_consume_token(MINUS);
+                    n47 = JTBToolkit.makeNodeToken(n48);
         n0 = new NodeChoice(n47, 23);
       break;
-    case DIV:
-      n50 = jj_consume_token(DIV);
-                  n49 = JTBToolkit.makeNodeToken(n50);
+    case MULT:
+      n50 = jj_consume_token(MULT);
+                   n49 = JTBToolkit.makeNodeToken(n50);
         n0 = new NodeChoice(n49, 24);
       break;
-    case AND:
-      n52 = jj_consume_token(AND);
+    case DIV:
+      n52 = jj_consume_token(DIV);
                   n51 = JTBToolkit.makeNodeToken(n52);
         n0 = new NodeChoice(n51, 25);
       break;
-    case OR:
-      n54 = jj_consume_token(OR);
-                 n53 = JTBToolkit.makeNodeToken(n54);
+    case AND:
+      n54 = jj_consume_token(AND);
+                  n53 = JTBToolkit.makeNodeToken(n54);
         n0 = new NodeChoice(n53, 26);
       break;
-    case PIPE:
-      n56 = jj_consume_token(PIPE);
-                   n55 = JTBToolkit.makeNodeToken(n56);
+    case OR:
+      n56 = jj_consume_token(OR);
+                 n55 = JTBToolkit.makeNodeToken(n56);
         n0 = new NodeChoice(n55, 27);
       break;
-    case BIT_AND:
-      n58 = jj_consume_token(BIT_AND);
-                      n57 = JTBToolkit.makeNodeToken(n58);
+    case PIPE:
+      n58 = jj_consume_token(PIPE);
+                   n57 = JTBToolkit.makeNodeToken(n58);
         n0 = new NodeChoice(n57, 28);
       break;
-    case NOT:
-      n60 = jj_consume_token(NOT);
-                  n59 = JTBToolkit.makeNodeToken(n60);
+    case BIT_AND:
+      n60 = jj_consume_token(BIT_AND);
+                      n59 = JTBToolkit.makeNodeToken(n60);
         n0 = new NodeChoice(n59, 29);
       break;
-    case BOOLEAN:
-      n62 = jj_consume_token(BOOLEAN);
-                      n61 = JTBToolkit.makeNodeToken(n62);
+    case NOT:
+      n62 = jj_consume_token(NOT);
+                  n61 = JTBToolkit.makeNodeToken(n62);
         n0 = new NodeChoice(n61, 30);
       break;
-    case CLASS:
-      n64 = jj_consume_token(CLASS);
-                    n63 = JTBToolkit.makeNodeToken(n64);
+    case BOOLEAN:
+      n64 = jj_consume_token(BOOLEAN);
+                      n63 = JTBToolkit.makeNodeToken(n64);
         n0 = new NodeChoice(n63, 31);
       break;
-    case INTERFACE:
-      n66 = jj_consume_token(INTERFACE);
-                        n65 = JTBToolkit.makeNodeToken(n66);
+    case CLASS:
+      n66 = jj_consume_token(CLASS);
+                    n65 = JTBToolkit.makeNodeToken(n66);
         n0 = new NodeChoice(n65, 32);
       break;
-    case ELSE:
-      n68 = jj_consume_token(ELSE);
-                   n67 = JTBToolkit.makeNodeToken(n68);
+    case INTERFACE:
+      n68 = jj_consume_token(INTERFACE);
+                        n67 = JTBToolkit.makeNodeToken(n68);
         n0 = new NodeChoice(n67, 33);
       break;
-    case EXTENDS:
-      n70 = jj_consume_token(EXTENDS);
-                      n69 = JTBToolkit.makeNodeToken(n70);
+    case ELSE:
+      n70 = jj_consume_token(ELSE);
+                   n69 = JTBToolkit.makeNodeToken(n70);
         n0 = new NodeChoice(n69, 34);
       break;
-    case FALSE:
-      n72 = jj_consume_token(FALSE);
-                    n71 = JTBToolkit.makeNodeToken(n72);
+    case EXTENDS:
+      n72 = jj_consume_token(EXTENDS);
+                      n71 = JTBToolkit.makeNodeToken(n72);
         n0 = new NodeChoice(n71, 35);
       break;
-    case IF:
-      n74 = jj_consume_token(IF);
-                 n73 = JTBToolkit.makeNodeToken(n74);
+    case FALSE:
+      n74 = jj_consume_token(FALSE);
+                    n73 = JTBToolkit.makeNodeToken(n74);
         n0 = new NodeChoice(n73, 36);
       break;
-    case WHILE:
-      n76 = jj_consume_token(WHILE);
-                    n75 = JTBToolkit.makeNodeToken(n76);
+    case IF:
+      n76 = jj_consume_token(IF);
+                 n75 = JTBToolkit.makeNodeToken(n76);
         n0 = new NodeChoice(n75, 37);
       break;
-    case INTEGER:
-      n78 = jj_consume_token(INTEGER);
-                      n77 = JTBToolkit.makeNodeToken(n78);
+    case WHILE:
+      n78 = jj_consume_token(WHILE);
+                    n77 = JTBToolkit.makeNodeToken(n78);
         n0 = new NodeChoice(n77, 38);
       break;
-    case MAIN:
-      n80 = jj_consume_token(MAIN);
-                   n79 = JTBToolkit.makeNodeToken(n80);
+    case INTEGER:
+      n80 = jj_consume_token(INTEGER);
+                      n79 = JTBToolkit.makeNodeToken(n80);
         n0 = new NodeChoice(n79, 39);
       break;
-    case NEW:
-      n82 = jj_consume_token(NEW);
-                  n81 = JTBToolkit.makeNodeToken(n82);
+    case MAIN:
+      n82 = jj_consume_token(MAIN);
+                   n81 = JTBToolkit.makeNodeToken(n82);
         n0 = new NodeChoice(n81, 40);
       break;
-    case PUBLIC:
-      n84 = jj_consume_token(PUBLIC);
-                     n83 = JTBToolkit.makeNodeToken(n84);
+    case NEW:
+      n84 = jj_consume_token(NEW);
+                  n83 = JTBToolkit.makeNodeToken(n84);
         n0 = new NodeChoice(n83, 41);
       break;
-    case RETURN:
-      n86 = jj_consume_token(RETURN);
+    case PUBLIC:
+      n86 = jj_consume_token(PUBLIC);
                      n85 = JTBToolkit.makeNodeToken(n86);
         n0 = new NodeChoice(n85, 42);
       break;
-    case STATIC:
-      n88 = jj_consume_token(STATIC);
+    case RETURN:
+      n88 = jj_consume_token(RETURN);
                      n87 = JTBToolkit.makeNodeToken(n88);
         n0 = new NodeChoice(n87, 43);
       break;
-    case STRING:
-      n90 = jj_consume_token(STRING);
+    case STATIC:
+      n90 = jj_consume_token(STATIC);
                      n89 = JTBToolkit.makeNodeToken(n90);
         n0 = new NodeChoice(n89, 44);
       break;
-    case THIS:
-      n92 = jj_consume_token(THIS);
-                   n91 = JTBToolkit.makeNodeToken(n92);
+    case STRING:
+      n92 = jj_consume_token(STRING);
+                     n91 = JTBToolkit.makeNodeToken(n92);
         n0 = new NodeChoice(n91, 45);
       break;
-    case TRUE:
-      n94 = jj_consume_token(TRUE);
+    case THIS:
+      n94 = jj_consume_token(THIS);
                    n93 = JTBToolkit.makeNodeToken(n94);
         n0 = new NodeChoice(n93, 46);
       break;
-    case PRINT:
-      n96 = jj_consume_token(PRINT);
-                    n95 = JTBToolkit.makeNodeToken(n96);
+    case TRUE:
+      n96 = jj_consume_token(TRUE);
+                   n95 = JTBToolkit.makeNodeToken(n96);
         n0 = new NodeChoice(n95, 47);
       break;
-    case VOID:
-      n98 = jj_consume_token(VOID);
-                   n97 = JTBToolkit.makeNodeToken(n98);
+    case PRINT:
+      n98 = jj_consume_token(PRINT);
+                    n97 = JTBToolkit.makeNodeToken(n98);
         n0 = new NodeChoice(n97, 48);
       break;
-    case OBJECT:
-      n100 = jj_consume_token(OBJECT);
-                      n99 = JTBToolkit.makeNodeToken(n100);
+    case VOID:
+      n100 = jj_consume_token(VOID);
+                    n99 = JTBToolkit.makeNodeToken(n100);
         n0 = new NodeChoice(n99, 49);
       break;
-    case INTEGER_LITERAL:
-      n102 = jj_consume_token(INTEGER_LITERAL);
-                               n101 = JTBToolkit.makeNodeToken(n102);
+    case OBJECT:
+      n102 = jj_consume_token(OBJECT);
+                      n101 = JTBToolkit.makeNodeToken(n102);
         n0 = new NodeChoice(n101, 50);
       break;
-    case FLOAT_LITERAL:
-      n104 = jj_consume_token(FLOAT_LITERAL);
-                             n103 = JTBToolkit.makeNodeToken(n104);
+    case INTEGER_LITERAL:
+      n104 = jj_consume_token(INTEGER_LITERAL);
+                               n103 = JTBToolkit.makeNodeToken(n104);
         n0 = new NodeChoice(n103, 51);
       break;
-    case STRING_LITERAL:
-      n106 = jj_consume_token(STRING_LITERAL);
-                              n105 = JTBToolkit.makeNodeToken(n106);
+    case FLOAT_LITERAL:
+      n106 = jj_consume_token(FLOAT_LITERAL);
+                             n105 = JTBToolkit.makeNodeToken(n106);
         n0 = new NodeChoice(n105, 52);
       break;
-    case IDENTIFIER:
-      n108 = jj_consume_token(IDENTIFIER);
-                          n107 = JTBToolkit.makeNodeToken(n108);
+    case STRING_LITERAL:
+      n108 = jj_consume_token(STRING_LITERAL);
+                              n107 = JTBToolkit.makeNodeToken(n108);
         n0 = new NodeChoice(n107, 53);
+      break;
+    case IDENTIFIER:
+      n110 = jj_consume_token(IDENTIFIER);
+                          n109 = JTBToolkit.makeNodeToken(n110);
+        n0 = new NodeChoice(n109, 54);
       break;
     default:
       jj_la1[4] = jj_gen;
@@ -792,6 +801,11 @@ public class Cppgrammer implements CppgrammerConstants {
     finally { jj_save(5, xla); }
   }
 
+  static private boolean jj_3R_6() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
   static private boolean jj_3_4() {
     if (jj_scan_token(MODULE)) return true;
     return false;
@@ -815,11 +829,6 @@ public class Cppgrammer implements CppgrammerConstants {
 
   static private boolean jj_3_3() {
     if (jj_scan_token(72)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_6() {
-    if (jj_scan_token(IDENTIFIER)) return true;
     return false;
   }
 
@@ -876,7 +885,7 @@ public class Cppgrammer implements CppgrammerConstants {
       jj_la1_init_2();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0xfdfdfe00,0xfdc5fe00,0x20000000,0x0,0xfdc5fe00,};
+      jj_la1_0 = new int[] {0xfffdfe00,0xffc5fe00,0x20000000,0x0,0xffc5fe00,};
    }
    private static void jj_la1_init_1() {
       jj_la1_1 = new int[] {0xffffdfff,0xffffdfff,0x0,0x20,0xffffdfff,};
